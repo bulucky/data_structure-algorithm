@@ -51,7 +51,17 @@ int hash_func(int key) {
     return key % MAX_SIZE;
 }
 
-// 填加元素
+/**
+ * @brief 哈希表填加元素
+ * 
+ * @details ...
+ * 
+ * @param[in] hash_map 哈希表指针
+ * @param[in] key 填加键值对(元素) 键
+ * @param[in] val 填加键值对(元素) 值指针
+ * 
+ * @return bool        
+ */                                           
 bool hash_set(struct HashMap* hash_map, const int key, const char* val) {
     struct Pair* pair = malloc(sizeof(struct Pair));
     pair->key = key; 
