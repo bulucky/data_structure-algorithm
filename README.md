@@ -1,2 +1,2 @@
 # Data_Structure && Algorithm
-stduy and review
+study and review
