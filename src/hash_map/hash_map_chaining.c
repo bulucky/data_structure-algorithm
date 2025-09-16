@@ -28,10 +28,7 @@ typedef struct HashMap
 /**
  * @brief 哈希表构造函数 -- 初始化
  * 
- * @details ...
- * 
  * @param[in] no
- * 
  * @return HashMap地址 (地址)        
  */
 HashMap* new_hash_map() {
@@ -69,10 +66,7 @@ HashMap* new_hash_map() {
 /**
  * @brief 哈希表析构函数 -- 释放内存
  * 
- * @details ...
- * 
  * @param[in] hash_map地址
- * 
  * @return no        
  */
 void del_hash_map(HashMap* hash_map) {
@@ -106,12 +100,9 @@ int hash_func(int key) {
 /**
  * @brief 哈希表填加元素
  * 
- * @details ...
- * 
- * @param[in] hash_map 哈希表指针
- * @param[in] key 填加键值对(元素) 键       (值)
- * @param[in] val 填加键值对(元素) 值指针   (指针)
- * 
+ * @param hash_map 哈希表指针
+ * @param key 填加键值对(元素) 键       (值)
+ * @param val 填加键值对(元素) 值指针   (指针)
  * @return bool        
  */
 bool hash_set(HashMap* hash_map, const int key, const char* val) {
@@ -149,11 +140,8 @@ bool hash_set(HashMap* hash_map, const int key, const char* val) {
 /**
  * @brief 哈希表查找元素并打印
  * 
- * @details ...
- * 
- * @param[in] hash_map 哈希表指针
- * @param[in] key 填加键值对(元素) 键       (值)
- * 
+ * @param hash_map 哈希表指针
+ * @param key 填加键值对(元素) 键       (值)
  * @return bool        
  */
 bool hash_find(HashMap* hash_map, const int key) {
@@ -177,12 +165,9 @@ bool hash_find(HashMap* hash_map, const int key) {
 
 /**
  * @brief 哈希表删除指定键值对
- * 
- * @details ...
- * 
- * @param[in] hash_map 哈希表指针
- * @param[in] key 填加键值对(元素) 键       (值)
- * 
+
+ * @param hash_map 哈希表指针
+ * @param key 填加键值对(元素) 键       (值)
  * @return bool        
  */
 bool hash_del(HashMap* hash_map, const int key) {
