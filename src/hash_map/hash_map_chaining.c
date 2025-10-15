@@ -46,11 +46,12 @@ HashMap* new_hash_map() {
             }else {
                 Pair pair;
                 pair.val = malloc(sizeof(char));
+                // pair.val = NULL;
                 if(pair.val == NULL) {
                     printf("memory malloc failed! \n");
                 }else {
                     pair.key = -1;
-                    strcpy(pair.val, "\0");
+                    strcpy(pair.val, "");
                     node->pair = pair;
                     node->next = NULL;
                     hash_map->buckets[i] = node;
