@@ -9,6 +9,7 @@ typedef struct treeNode
     element E;
     struct treeNode* left;
     struct treeNode* right;
+    int flag;
 
 }* Node;
 
@@ -74,6 +75,17 @@ sElement pop_stack(sNode head) {
     return e;
 }
 
+/** 
+*@brief 返回栈顶元素指针
+*
+*@param sNode head  指针
+*
+*@return sElement   栈顶元素指针
+*/
+sElement peek_stack(sNode haed) {
+    return haed->next->E;
+}
+
 /****************stack*****************/
 
 void pre_order(Node root) {
@@ -97,6 +109,66 @@ void pre_order_stack(Node root) {
     }
 }
 
+/**
+*@brief 中序遍历
+*   结点访问顺序在中间(父结点、左子结点、右子结点)
+*   例: B、D、E, 访问顺序为D、B、E
+*@param Node root 根节点指针
+*/ 
+void in_order(Node root) {
+    if(root == NULL) return;
+    in_order(root->left);
+    printf("%c", root->E);
+    in_order(root->right);
+}
+
+void in_order_stack(Node root) {
+    struct stackNode stack;
+    init_stack(&stack);                                   
+    while(root || is_empty(&stack)) {            
+        while(root) {                                          
+            push_stack(&stack, root);         
+            root = root->left;
+        }                                             
+        Node node = pop_stack(&stack);
+        printf("%c", node->E);                   
+        root = node->right;
+    }
+}
+
+/**
+*@brief 后序遍历
+*   结点访问顺序在最后(父结点、左子结点、右子结点)
+*   例: B、D、E, 访问顺序为D、E、B
+*@param Node root 根节点指针
+*/
+void post_order(Node root) {
+    if(root == NULL) return;
+    post_order(root->left);
+    post_order(root->right);
+    printf("%c", root->E);
+}
+
+void post_order_stack(Node root) {
+    struct stackNode stack;
+    init_stack(&stack);
+    while(root || is_empty(&stack)) {
+        while(root) {
+            push_stack(&stack, root);
+            root->flag = 0;
+            root = root->left;   
+        }
+        root = peek_stack(&stack);
+        if(root->flag == 0) {
+            root->flag = 1;
+            root = root->right;
+        }else {
+            printf("%c", root->E);
+            pop_stack(&stack);
+            root = NULL;
+        }
+    }
+}
 
 
 int main(int argc, char const* argv[])
@@ -128,8 +200,10 @@ int main(int argc, char const* argv[])
     F->left = F->right = NULL;
 
     // pre_order(A);
-    pre_order_stack(A);
-    
+    // pre_order_stack(A);
+    // in_order(A);
+    // post_order(A);
+    post_order_stack(A);
 
     return 0;
 }
