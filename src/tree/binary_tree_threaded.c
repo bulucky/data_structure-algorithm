@@ -9,6 +9,7 @@ typedef struct treeNode
     element E;
     struct treeNode* left;
     struct treeNode* right;
+    struct treeNode* parent;
     bool left_threaded;
     bool right_threaded;
 
@@ -112,11 +113,68 @@ void in_order(tNode root) {
     }
 }
 
+tNode post_pre = NULL;
+/**
+*@brief 中序遍历线索化,仅线索化无输出
+*
+*@param tNode root 根结点指针
+*
+*@return void
+*/
+void post_order_threaded(tNode root) {
+    if(root == NULL) return;
+    if(root->left && root->left_threaded == false) {
+        post_order_threaded(root->left);
+        root->left->parent = root;
+    }
+    if(root->right && root->right_threaded == false) {
+        post_order_threaded(root->right);
+        root->right->parent = root;
+    }
+    // 线索化
+    if(root->left == NULL) {
+        root->left = post_pre;
+        root->left_threaded = true;
+    }
+    if(post_pre && post_pre->right == NULL) {
+        post_pre->right = root;
+        post_pre->right_threaded = true;
+    }
+    post_pre = root;
+}
+
+/**
+*@brief 遍历输出后序线索化后的二叉树结点元素
+*
+*@param tNode root 根结点指针
+*
+*@return void
+*/
+void post_order(tNode root) {
+    // 记录二叉树根结点
+    tNode root_tNode = root;
+    // 找到未线索化时的左边叶子结点
+    while(root->left_threaded == false) {
+        root = root->left;
+    }
+    // 以线索化右标志和其兄弟结点为遍历索引
+    while(root) {
+        printf("%c", root->E);
+        if(root->right_threaded == true) {
+            root = root->right;
+        }else if(root != root_tNode && root->parent->right) {
+            root = root->parent->right;
+        }else {
+            break;
+        }
+    }
+}
+
 tNode create_node(element e) {
     tNode node = malloc(sizeof(struct treeNode));
     if(node == NULL) return NULL;
     node->E = e;
-    node->left = node->right = NULL;
+    node->left = node->right = node->parent = NULL;
     node->left_threaded = node->right_threaded = false;
     
     return node;
@@ -139,8 +197,14 @@ int main(int argc, char const* argv[])
 
     // pre_order_threaded(A);
     // pre_order(A);
-    in_order_threaded(A);
-    in_order(A);
+    // in_order_threaded(A);
+    // in_order(A);
+    post_order_threaded(A);
+    post_order(A);
 
     return 0;
 }
+
+/**
+*todo: 后序线索化存在问题, 加入F
+*/ 
