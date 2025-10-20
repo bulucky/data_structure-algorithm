@@ -14,6 +14,13 @@ typedef struct treeNode
 
 }* tNode;
 
+/**
+*@brief 前序遍历线索化,仅线索化无输出
+*
+*@param tNode root 根结点指针
+*
+*@return void
+*/ 
 tNode pre = NULL;
 void pre_order_threaded(tNode root) {
     if(root == NULL) return;
@@ -34,6 +41,76 @@ void pre_order_threaded(tNode root) {
         pre_order_threaded(root->right);
 }
 
+/**
+*@brief 遍历输出前序线索化后的二叉树
+*
+*@param tNode root 根结点指针
+*
+*@return void
+*/
+void pre_order(tNode root) {
+    while(root) {
+        printf("%c", root->E);
+        if(root->right_threaded) {
+            root = root->right;
+        }else if(root->right == NULL) {
+            break;
+        }else {
+            root = root->left;
+        }
+    }
+}
+
+tNode in_pre = NULL;
+/**
+*@brief 中序遍历线索化,仅线索化无输出
+*
+*@param tNode root 根结点指针
+*
+*@return void
+*/
+void in_order_threaded(tNode root) {
+    if(root == NULL) return;
+    if(root->left_threaded == false) {
+        in_order_threaded(root->left);
+    }
+    // 线索化
+    if(root->left == NULL) {
+        root->left = in_pre;
+        root->left_threaded = true;
+    }
+    if(in_pre && in_pre->right == NULL) {
+        in_pre->right = root;
+        in_pre->right_threaded = true;
+    }
+    in_pre = root;
+    if(root->right_threaded == false) {
+        in_order_threaded(root->right);
+    }
+}
+
+/**
+*@brief 遍历输出中序线索化后的二叉树结点元素
+*
+*@param tNode root 根结点指针
+*
+*@return void
+*/
+void in_order(tNode root) {
+    // 找到未线索化时的左边叶子结点
+    while(root->left_threaded == false) {
+        root = root->left;
+    }
+    // 通过线索化标志向右来进行索引遍历 --线索化后右边为后继结点
+    while(root) {
+        printf("%c", root->E);
+        if(root->right_threaded || root->right) {
+            root = root->right;
+        }else {
+            break;
+        }
+    }
+}
 
 tNode create_node(element e) {
     tNode node = malloc(sizeof(struct treeNode));
@@ -52,13 +129,18 @@ int main(int argc, char const* argv[])
     tNode C = create_node('C');
     tNode D = create_node('D');
     tNode E = create_node('E');
+    // tNode F = create_node('F');
 
     A->left = B;    
     A->right = C;
     B->left = D;    
     B->right = E;
+    // C->right = F;
 
-    pre_order_threaded(A);
+    // pre_order_threaded(A);
+    // pre_order(A);
+    in_order_threaded(A);
+    in_order(A);
 
     return 0;
 }

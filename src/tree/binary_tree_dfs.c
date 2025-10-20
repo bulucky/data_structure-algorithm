@@ -201,9 +201,9 @@ int main(int argc, char const* argv[])
 
     // pre_order(A);
     // pre_order_stack(A);
-    // in_order(A);
+    in_order(A);
     // post_order(A);
-    post_order_stack(A);
+    // post_order_stack(A);
 
     return 0;
 }
