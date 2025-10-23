@@ -115,7 +115,7 @@ void in_order(tNode root) {
 
 tNode post_pre = NULL;
 /**
-*@brief 中序遍历线索化,仅线索化无输出
+*@brief 后序遍历线索化,仅线索化无输出
 *
 *@param tNode root 根结点指针
 *
@@ -170,6 +170,13 @@ void post_order(tNode root) {
     }
 }
 
+/**
+*@brief 创建一个二叉树结点
+*
+*@param element e   二叉树结点元素
+*
+*@return tNode      二叉树结点指针
+*/
 tNode create_node(element e) {
     tNode node = malloc(sizeof(struct treeNode));
     if(node == NULL) return NULL;
