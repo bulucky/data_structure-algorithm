@@ -1,0 +1,7 @@
+# .clangd
+CompileFlags:
+  Add: [--target=x86_64-w64-windows-gnu, -std=c++17, -std=c11, -Wall]
+Diagnostics:
+  ClangTidy:
+    Add: [performance*, modernize*]
+    Remove: [modernize-use-trailing-return-type]
