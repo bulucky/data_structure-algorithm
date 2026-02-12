@@ -26,7 +26,8 @@ public:
         insert(n_node, root_);
     }
 
-    void bst_find(int val) {
+    bool bst_find(int val) {
+        return find(val, root_);
     }
 
     void bst_delete(int val) {
@@ -42,6 +43,8 @@ public:
     }
 
 private:
+    bool is_find = false;
+
     void insert(TreeNode* n_node, TreeNode* t_node) {
         if (n_node->val < t_node->val) {
             if (t_node->left == nullptr) {
@@ -61,6 +64,17 @@ private:
             }
         }
     }
+
+    bool find(int val, TreeNode* t_node) {
+        if (val == t_node->val) {
+            is_find = true;
+        } else if (t_node->left != nullptr && val < t_node->val) {
+            find(val, t_node->left);
+        } else if (t_node->right != nullptr && val > t_node->val) {
+            find(val, t_node->right);
+        }
+        return is_find;
+    }
 };
 
 int main(int argc, char const* argv[]) {
@@ -71,6 +85,8 @@ int main(int argc, char const* argv[]) {
     bst->bst_insert(3);
 
     bst->bst_print(bst->root_);
+
+    std::cout << "find " << bst->bst_find(4) << "\n";
 
     delete bst;
 
